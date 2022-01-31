@@ -164,6 +164,15 @@ subtotal = 0
 for price in prices:
 	subtotal += price
 tax = (subtotal * 0.07)
-print(f"\nSubtotal:\t${subtotal:.2f}\nTax:\t${tax:.2f}\nTotal:\t${(subtotal + tax):.2f}")
+print(f"\nSubtotal:\t${subtotal:.2f}\nTax:\t\t${tax:.2f}\nTotal:\t\t${(subtotal + tax):.2f}")
 
 print(f"\nThank you for ordering at Burger Boys!\n\n------ Check Closed ------")
+
+# payment
+while (True):
+	tendered = float(input("\nHow much will you be paying? "))
+	if (tendered > (subtotal + tax)):
+		print(f"\nAmount Tendered: {tendered:.2f}\nChange: {-((subtotal + tax) - tendered):.2f}")
+		break
+	else:
+		print("You have to pay fully...")
