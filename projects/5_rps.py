@@ -6,6 +6,7 @@ Rock Paper Scissors
 
 # modules
 import random
+import os
 
 # functions
 def choice(num):
@@ -58,35 +59,52 @@ def round():
 		print(f"\nYou chose {userStr} and the AI chose {aiStr}\nThe AI wins this round!")
 		return [0, 1]
 
-# globals
-while (True):
-	try:
-		rounds = int(input("How many rounds do you want to play? "))
-		break
-	except:
-		print("Invalid input, try again...\n")
-
 # game loop
-i = 0
-totalScore = [0, 0]
-while (i < rounds):
-	print(f"\nRound {i+1}:")
-	roundScore = round()
-	for j in range(2):
-		totalScore[j] += roundScore[j]
-	i += 1
+exit = False
+while (exit == False):
+	# variables
+	while (True):
+		try:
+			rounds = int(input("How many rounds do you want to play? "))
+			break
+		except:
+			print("Invalid input, try again...\n")
+	
+	i = 0
+	totalScore = [0, 0]
+	while (i < rounds):
+		print(f"\nRound {i+1}:")
+		roundScore = round()
+		for j in range(2):
+			totalScore[j] += roundScore[j]
+		i += 1
+	
+	print(f"\nThe final score is {totalScore[0]}:{totalScore[1]}")
+	
+	# tie breaker or end the game
+	if (totalScore[0] == totalScore[1]):
+		while (True):
+			print("The game's a tie! One more tiebreaker round...\n")
+			tiebreaker = round()
+			if (tiebreaker[0] == 1):
+				print("\nYou win the game!")
+				break
+			elif (tiebreaker[1] == 1):
+				print("\nThe AI wins the game!")
+				break
+	elif (totalScore[0] > totalScore[1]):
+		print("You win the game!")
+	elif (totalScore[0] < totalScore[1]):
+		print("The AI wins the game!")
 
-print(f"\nThe final score is {totalScore[0]}:{totalScore[1]}")
-
-# tie breaker or end the game
-if (totalScore[0] == totalScore[1]):
-	print("It's a tie! One more tiebreaker round...\n")
-	tiebreaker = round()
-	if (tiebreaker[0] == 1):
-		print("\nYou win the game!")
-	else:
-		print("\nThe AI wins the game!")
-elif (totalScore[0] > totalScore[1]):
-	print("You win the game!")
-elif (totalScore[0] < totalScore[1]):
-	print("The AI wins the game!")
+	while (True):
+		replay = input("\nWould you like to play again? (y/n) ")
+		if (replay.lower() == "y"):
+			# thanks stack overflow
+			os.system('cls' if os.name == 'nt' else 'clear')
+			break
+		elif (replay.lower() == "n"):
+			exit = True
+			break
+		else:
+			print("Invalid input, try again...")
